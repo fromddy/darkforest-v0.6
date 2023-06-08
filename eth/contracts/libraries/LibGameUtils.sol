@@ -542,12 +542,12 @@ library LibGameUtils {
             }
         }
         if (sender == gs().planets[locationId].owner) {
-            require(arrivalsFromOwner < 6, "Planet is rate-limited");
+            require(arrivalsFromOwner < 8, "Planet is rate-limited");
         } else {
-            require(arrivalsFromOthers < 6, "Planet is rate-limited");
+            require(arrivalsFromOthers < 8, "Planet is rate-limited");
         }
 
-        require(arrivalsFromOwner + arrivalsFromOthers < 12, "Planet is rate-limited");
+        require(arrivalsFromOwner + arrivalsFromOthers < 16, "Planet is rate-limited");
     }
 
     function updateWorldRadius() public {

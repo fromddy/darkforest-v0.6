@@ -265,23 +265,26 @@ library LibPlanet {
         view
         returns (
             Planet memory,
-            uint256[12] memory eventsToRemove,
+            uint256[16] memory eventsToRemove,
             uint256[12] memory artifactsToAdd
         )
     {
         Planet memory planet = gs().planets[location];
 
-        // first 12 are event ids to remove
+        // first 16 are event ids to remove
         // last 12 are artifact ids that are new on the planet
-        uint256[24] memory updates;
+        uint256[28] memory updates;
 
         PlanetEventMetadata[] memory events = gs().planetEvents[location];
 
         (planet, updates) = LibLazyUpdate.applyPendingEvents(timestamp, planet, events);
 
-        for (uint256 i = 0; i < 12; i++) {
+        for (uint256 i = 0; i < 16; i++) {
             eventsToRemove[i] = updates[i];
-            artifactsToAdd[i] = updates[i + 12];
+            if(i<12){
+                artifactsToAdd[i] = updates[i + 16];
+            }
+
         }
 
         for (uint256 i = 0; i < artifactsToAdd.length; i++) {
@@ -326,7 +329,7 @@ library LibPlanet {
 
         (
             Planet memory planet,
-            uint256[12] memory eventsToRemove,
+            uint256[16] memory eventsToRemove,
             uint256[12] memory artifactIdsToAddToPlanet
         ) = getRefreshedPlanet(location, block.timestamp);
 
@@ -334,7 +337,7 @@ library LibPlanet {
 
         PlanetEventMetadata[] storage events = gs().planetEvents[location];
 
-        for (uint256 toRemoveIdx = 0; toRemoveIdx < 12; toRemoveIdx++) {
+        for (uint256 toRemoveIdx = 0; toRemoveIdx < 16; toRemoveIdx++) {
             for (uint256 i = 0; i < events.length; i++) {
                 if (events[i].id == eventsToRemove[toRemoveIdx]) {
                     events[i] = events[events.length - 1];

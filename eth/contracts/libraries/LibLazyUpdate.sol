@@ -168,14 +168,14 @@ library LibLazyUpdate {
         return (arrival.carriedArtifactId, planet);
     }
 
-    function applyPendingEvents(
+    function    applyPendingEvents(
         uint256 currentTimestamp,
         Planet memory planet,
         PlanetEventMetadata[] memory events
-    ) public view returns (Planet memory, uint256[24] memory) {
-        // first 12 are event ids to remove
+    ) public view returns (Planet memory, uint256[28] memory) {
+        // first 16 are event ids to remove
         // last 12 are artifact ids that are new on the planet
-        uint256[24] memory eventIdsAndArtifacts;
+        uint256[28] memory eventIdsAndArtifacts;
 
         uint256 numEventsToRemove = 0;
         uint256 numNewArtifactsOnPlanet = 0;
@@ -233,7 +233,7 @@ library LibLazyUpdate {
                     );
 
                     if (newArtifactId != 0) {
-                        eventIdsAndArtifacts[12 + numNewArtifactsOnPlanet++] = newArtifactId;
+                        eventIdsAndArtifacts[16 + numNewArtifactsOnPlanet++] = newArtifactId;
                     }
                 }
             }

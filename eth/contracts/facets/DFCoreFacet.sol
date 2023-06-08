@@ -65,7 +65,7 @@ contract DFCoreFacet is WithStorage {
         view
         returns (
             Planet memory,
-            uint256[12] memory eventsToRemove,
+            uint256[16] memory eventsToRemove,
             uint256[12] memory artifactsToAdd
         )
     {
